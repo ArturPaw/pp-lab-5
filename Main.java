@@ -10,23 +10,26 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            Person person = new Person("Jan Kowalski", 30);
-            System.out.println("Imię: " + person.getName());
-            System.out.println("Wiek: " + person.getAge());
+            // Utwórz tablicę people z pięcioma obiektami instancji Person
+            Person[] people = new Person[5];
 
-            // Utwórz obiekt typu EmailMessenger
-            Messenger messenger = new EmailMessenger();
+            // Utwórz stałą b (int) o wartości 10
+            int b = 10;
 
-            // Dodaj dwie liczby
-            int a = 10;
-            int b = 20;
-            int sum = MathUtils.add(a, b);
+            // W bloku try-catch przypisz dla każdej instancji nową instancję Person
+            for (int i = 0; i < people.length; i++) {
+                people[i] = new Person("Imię " + (i + 1), 30 + i);
+            }
 
-            // Wyświetl wynik dodawania
-            System.out.println("Wynik dodawania " + a + " i " + b + ": " + sum);
+            // Wykorzystaj metodę add z MathUtils dla każdej osoby
+            for (Person person : people) {
+                int sum = MathUtils.add(person.getAge(), b);
+                System.out.println("Wynik dodawania wieku " + person.getName() + " i " + b + ": " + sum);
 
-            // Wyślij wiadomość e-mail
-            messenger.sendMessage("Witaj, " + person.getName() + "! Wynik dodawania " + a + " i " + b + " to: " + sum);
+                // Wyślij wiadomość e-mail z wyliczoną wartością
+                Messenger messenger = new EmailMessenger();
+                messenger.sendMessage("Witaj, " + person.getName() + "! Wynik dodawania wieku i " + b + " to: " + sum);
+            }
         } catch (InvalidAgeException e) {
             System.err.println("Błąd: " + e.getMessage());
         }
